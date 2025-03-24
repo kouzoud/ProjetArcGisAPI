@@ -14,6 +14,21 @@
 </head>
 <body>
     <div id="viewDiv"></div>
+    <div id="controls">
+        <h3>Symbologie des communes</h3>
+        <select id="renderer-type">
+            <option value="surface">Par surface (5 classes)</option>
+            <option value="prefecture">Par préfecture</option>
+            <option value="commune">Par commune/arrondissement</option>
+        </select>
+        
+        <h3>Symbologie de la Population</h3>
+        <select id="population-view">
+            <option value="2004">Population 2004 (5 classes)</option>
+            <option value="1994">Population 1994 (5 classes)</option>
+            <option value="compare">Comparaison 1994/2004</option>
+        </select>
+    </div>
 
     <!-- Chargement du script JavaScript -->
     <script src="likn.js"></script>
