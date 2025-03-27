@@ -107,37 +107,50 @@
         <div id="basemap-gallery" class="hidden"></div>
     </div>
 
-    <!-- Panneau de droite (Réclamations) -->
     <div id="rightPanel" class="panel hidden">
-        <h3>Gestion des Réclamations</h3>
+        <div class="reclamation-header">
+            <h3><i class="fas fa-exclamation-circle"></i> Gestion des Réclamations</h3>
+        </div>
         
         <!-- Formulaire de réclamation -->
         <div id="reclamationForm">
             <div class="form-group">
-                <label for="reclamationObjet">Objet :</label>
-                <input type="text" id="reclamationObjet" class="form-control">
+                <label for="reclamationObjet">Objet <span class="required">*</span></label>
+                <input type="text" id="reclamationObjet" class="form-control" placeholder="Décrivez brièvement le problème">
             </div>
             
             <div class="form-group">
-                <label for="reclamationMessage">Message :</label>
-                <textarea id="reclamationMessage" class="form-control"></textarea>
+                <label for="reclamationMessage">Message <span class="required">*</span></label>
+                <textarea id="reclamationMessage" class="form-control" rows="4" placeholder="Détaillez votre réclamation ici..."></textarea>
             </div>
             
             <div class="form-group">
-                <label for="reclamationEmail">Email :</label>
-                <input type="email" id="reclamationEmail" class="form-control">
+                <label for="reclamationEmail">Email <span class="required">*</span></label>
+                <input type="email" id="reclamationEmail" class="form-control" placeholder="votre@email.com">
             </div>
             
-            <button id="startReclamation" class="btn btn-block">📍 Placer sur la carte</button>
-            <button id="saveReclamation" class="btn btn-block" disabled>💾 Enregistrer</button>
-            <button id="viewReclamations" class="btn btn-block">📋 Voir toutes les réclamations</button>
+            <div class="button-group">
+                <button id="startReclamation" class="btn btn-primary">
+                    <i class="fas fa-map-marker-alt"></i> Placer sur la carte
+                </button>
+                <button id="saveReclamation" class="btn btn-success" disabled>
+                    <i class="fas fa-save"></i> Enregistrer
+                </button>
+                <button id="viewReclamations" class="btn btn-secondary">
+                    <i class="fas fa-list"></i> Voir toutes les réclamations
+                </button>
+            </div>
         </div>
         
         <!-- Liste des réclamations -->
         <div id="reclamationList" class="hidden">
-            <h4>Liste des Réclamations</h4>
+            <div class="list-header">
+                <h4><i class="fas fa-clipboard-list"></i> Liste des Réclamations</h4>
+                <button id="closeReclamations" class="btn btn-icon">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
             <div id="reclamationsContainer"></div>
-            <button id="closeReclamations" class="btn btn-block">✕ Fermer</button>
         </div>
     </div>
 

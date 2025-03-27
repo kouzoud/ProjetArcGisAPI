@@ -191,79 +191,189 @@ textarea.form-control {
     box-shadow: 0 0 5px rgba(0,0,0,0.2);
 }
 
-/* Style des éléments de réclamation */
-.reclamation-item {
-    padding: 10px;
-    margin-bottom: 10px;
-    border-bottom: 1px solid #eee;
+/* Panel principal */
+#rightPanel {
+    background: #ffffff;
+    border-left: 1px solid #e0e0e0;
+    box-shadow: -2px 0 10px rgba(0,0,0,0.05);
+    padding: 20px;
+    width: 350px;
 }
 
 .reclamation-header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 5px;
+    border-bottom: 1px solid #eaeaea;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
 }
 
-.reclamation-date {
-    color: #666;
+.reclamation-header h3 {
+    color: #2c3e50;
+    font-size: 1.3em;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Formulaire */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #4a4a4a;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.95em;
+    transition: border 0.3s;
+}
+
+.form-control:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(52,152,219,0.2);
+}
+
+textarea.form-control {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.required {
+    color: #e74c3c;
+}
+
+/* Boutons */
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 0.95em;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.btn-primary {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+}
+
+.btn-success {
+    background-color: #2ecc71;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #27ae60;
+}
+
+.btn-secondary {
+    background-color: #95a5a6;
+    color: white;
+}
+
+.btn-secondary:hover {
+    background-color: #7f8c8d;
+}
+
+.btn:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+}
+
+.btn-icon {
+    background: none;
+    color: #7f8c8d;
+    padding: 5px;
+    font-size: 1em;
+}
+
+/* Liste des réclamations */
+.list-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.list-header h4 {
+    margin: 0;
+    color: #2c3e50;
+    font-size: 1.1em;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Tableau des réclamations */
+.reclamation-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
     font-size: 0.9em;
 }
 
-.reclamation-item {
-    border: 1px solid #ddd;
-    padding: 15px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-}
-
-.reclamation-header h5 {
-    margin: 0 0 10px 0;
-    color: #2c3e50;
-}
-
-.reclamation-details p {
-    margin: 5px 0;
-}
-
-.error-message {
-    color: #e74c3c;
+.reclamation-table th, .reclamation-table td {
     padding: 10px;
-    background: #fadbd8;
-    border-radius: 5px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
 }
 
-/* Conteneur de liste */
-.reclamation-list-container {
-    max-height: 70vh;
-    overflow-y: auto;
-    padding-right: 5px;
-}
-
-/* Élément de réclamation */
-.reclamation-item {
-    background: #ffffff;
-    border: 1px solid #e3e3e3;
-    border-radius: 6px;
-    padding: 15px;
-    margin-bottom: 15px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-}
-
-.reclamation-title {
-    color: #2c3e50;
-    margin: 0 0 10px 0;
-    font-size: 1.1em;
+.reclamation-table th {
+    background-color: #f8f9fa;
+    color: #495057;
     font-weight: 600;
 }
 
-.reclamation-details p {
-    margin: 8px 0;
-    color: #555;
-    font-size: 0.95em;
+.reclamation-table tr:hover {
+    background-color: #f8f9fa;
 }
 
-.reclamation-details strong {
-    color: #333;
+.zoom-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.85em;
+}
+
+.zoom-btn:hover {
+    background-color: #2980b9;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #rightPanel {
+        width: 100%;
+        padding: 15px;
+    }
 }
 
 .localize-btn {
