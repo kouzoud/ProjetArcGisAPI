@@ -1,22 +1,419 @@
-html,
-body,
-#viewDiv {
-padding: 0;
-margin: 0;
-height: 100%;
-width: 100%;
-}
-#controls {
-    position: absolute;
-    top: 70px;
-    right: 20px;
-    background: rgb(179, 217, 235);
-    padding: 10px;
-    z-index: 1000;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+html, body, #viewDiv {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
 }
 
-#controls select {
+/* Navigation Bar */
+#navBar {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    background-color: #0079c1;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 100;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+#navTitle {
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.nav-btn {
+    background: none;
+    border: none;
+    color: white;
+    padding: 10px 15px;
+    margin: 0 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+.nav-btn:hover {
+    background-color: rgba(255,255,255,0.2);
+}
+
+/* Panneaux latéraux */
+.panel {
+    position: absolute;
+    top: 60px;
+    background: white;
+    padding: 15px;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    z-index: 10;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+#leftPanel {
+    left: 20px;
+    width: 250px;
+}
+
+#rightPanel {
+    right: 20px;
+    width: 300px;
+}
+
+/* Styles pour les formulaires */
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.form-control {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+textarea.form-control {
+    height: 100px;
+    resize: vertical;
+}
+
+/* Tableau des réclamations */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+.data-table th, .data-table td {
+    padding: 8px 12px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.data-table th {
+    background-color: #f2f2f2;
+}
+
+.data-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+/* Boutons */
+.btn {
+    display: inline-block;
+    padding: 8px 12px;
+    background-color: #0079c1;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s;
+}
+
+.btn:hover {
+    background-color: #005a8c;
+}
+
+.btn-block {
+    display: block;
+    width: 100%;
+}
+
+/* Utilitaires */
+.hidden {
+    display: none;
+}
+
+#searchContainer {
+    display: flex;
+    align-items: center;
+    background: rgba(255,255,255,0.2);
+    border-radius: 20px;
+    padding: 5px 10px;
+    min-width: 250px;
+    flex-grow: 1;
+    max-width: 400px;
+}
+
+#searchInput {
+    background: transparent;
+    border: none;
+    color: white;
+    padding: 5px 8px;
+    width: 100%;
+    outline: none;
+}
+
+#searchInput::placeholder {
+    color: rgba(255,255,255,0.7);
+}
+
+
+/* Style des popups pour les rendre plus visibles */
+.esri-popup__main-container {
+    background-color: #fff;
+    border: 2px solid red;
+    border-radius: 5px;
+}
+
+/* Highlight des points sélectionnés */
+.reclamation-highlight {
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+/* Style des boutons de localisation */
+.zoom-btn {
+    padding: 5px 10px;
+    margin-top: 5px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.zoom-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+/* Style des éléments de réclamation */
+.reclamation-item {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.reclamation-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+}
+
+.reclamation-date {
+    color: #666;
+    font-size: 0.9em;
+}
+
+.reclamation-item {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+.reclamation-header h5 {
+    margin: 0 0 10px 0;
+    color: #2c3e50;
+}
+
+.reclamation-details p {
     margin: 5px 0;
-    padding: 5px;
+}
+
+.error-message {
+    color: #e74c3c;
+    padding: 10px;
+    background: #fadbd8;
+    border-radius: 5px;
+}
+
+/* Conteneur de liste */
+.reclamation-list-container {
+    max-height: 70vh;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+/* Élément de réclamation */
+.reclamation-item {
+    background: #ffffff;
+    border: 1px solid #e3e3e3;
+    border-radius: 6px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.reclamation-title {
+    color: #2c3e50;
+    margin: 0 0 10px 0;
+    font-size: 1.1em;
+    font-weight: 600;
+}
+
+.reclamation-details p {
+    margin: 8px 0;
+    color: #555;
+    font-size: 0.95em;
+}
+
+.reclamation-details strong {
+    color: #333;
+}
+
+.localize-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    margin-top: 10px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.localize-btn:hover {
+    background-color: #2980b9;
+    transform: translateY(-1px);
+}
+
+.error-message {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 10px 0;
+}
+
+.retry-btn {
+    background: #dc3545;
+    color: white;
+    margin-top: 10px;
+}
+
+
+#mapControls {
+    position: absolute;
+    top: 70px;
+    left: 20px;
+    z-index: 1000;
+  }
+  
+
+
+  /* Positionnement absolu pour éviter les conflits */
+.esri-zoom {
+    position: absolute;
+    top: 60px !important;
+    left: 15px !important;
+    z-index: 1000 !important;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.3);
+}
+
+/* Pour le bouton de zoom spécifique */
+.esri-zoom__button {
+    background-color: white;
+    color: #333;
+    margin: 2px;
+}
+
+/* Styles professionnels */
+.measurement-control {
+    position: relative;
+    margin-left: 15px;
+}
+
+.measurement-control .nav-link {
+    display: flex;
+    align-items: center;
+    padding: 8px 15px;
+    border-radius: 4px;
+    background-color: #f8f9fa;
+    transition: all 0.3s ease;
+}
+
+.measurement-control .nav-link:hover {
+    background-color: #e9ecef;
+}
+
+.measurement-control .nav-link.active {
+    background-color: #007bff;
+    color: white;
+}
+
+.measurement-label {
+    margin: 0 8px;
+    font-weight: 500;
+    font-size: 0.85rem;
+}
+
+.measurement-status {
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    background-color: #6c757d;
+    color: white;
+}
+
+.measurement-status.active {
+    background-color: #28a745;
+}
+
+/* Menu déroulant optionnel */
+.measurement-dropdown {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    border-radius: 4px;
+    z-index: 1000;
+    min-width: 150px;
+}
+
+.measurement-control:hover .measurement-dropdown {
+    display: block;
+}
+
+.measurement-dropdown button {
+    display: block;
+    width: 100%;
+    padding: 8px 15px;
+    text-align: left;
+    background: none;
+    border: none;
+    color: #333;
+}
+
+.measurement-dropdown button:hover {
+    background-color: #f8f9fa;
+}
+
+.measurement-dropdown i {
+    margin-right: 8px;
+    width: 16px;
+    text-align: center;
+}
+
+/* Conteneur des mesures */
+#measurementContainer {
+    position: absolute;
+    top: 100px;
+    left: 20px;
+    background: white;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    display: none;
+    z-index: 100;
 }

@@ -8,29 +8,155 @@
     <!-- Chargement des styles -->
     <link rel="stylesheet" href="https://js.arcgis.com/4.26/esri/themes/light/main.css">
     <link rel="stylesheet" href="style.css"> <!-- Fichier CSS local -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
     <!-- Chargement de l'API ArcGIS -->
     <script src="https://js.arcgis.com/4.26/"></script>
 </head>
 <body>
-    <div id="viewDiv"></div>
-    <div id="controls">
-        <h3>Symbologie des communes</h3>
-        <select id="renderer-type">
-            <option value="surface">Par surface (5 classes)</option>
-            <option value="prefecture">Par préfecture</option>
-            <option value="commune">Par commune/arrondissement</option>
-        </select>
+    <!-- Navigation Bar -->
+    <div id="navBar">
+        <div id="navTitle">Casablanca - Gestion Urbaine</div>
+        <button class="nav-btn" id="toggleLeftPanel">☰ Données</button>
+        <button class="nav-btn" id="toggleReclamations">📝 Réclamations</button>
+        <div id="searchContainer">
+            <input type="text" id="searchInput" placeholder="Rechercher une adresse...">
+            <button class="nav-btn">🔍</button>
+        </div>
+      
+        <div id="mapControls">
+            <div id="zoomWidget"></div>
+            <!-- autres widgets -->
+          </div>
         
-        <h3>Symbologie de la Population</h3>
-        <select id="population-view">
-            <option value="2004">Population 2004 (5 classes)</option>
-            <option value="1994">Population 1994 (5 classes)</option>
-            <option value="compare">Comparaison 1994/2004</option>
-        </select>
+       <!-- Dans votre navbar -->
+<li class="nav-item measurement-control">
+    <a class="nav-link" href="#" id="measurementBtn" title="Cliquer pour activer la mesure">
+        <i class="fas fa-ruler-combined"></i>
+        <span class="measurement-label">MESURE</span>
+        <span id="measurementStatus" class="measurement-status">INACTIF</span>
+    </a>
+    <!-- Menu déroulant optionnel pour choisir le type de mesure -->
+    <div class="measurement-dropdown">
+        <button id="measureDistance"><i class="fas fa-ruler-horizontal"></i> Distance</button>
+        <button id="measureArea"><i class="fas fa-vector-square"></i> Surface</button>
+    </div>
+</li>
+
+<div id="measurementContainer"></div>
+            
+        
+        
+        
+        
     </div>
 
-    <!-- Chargement du script JavaScript -->
+    <!-- Carte -->
+    <div id="viewDiv"></div>
+
+    
+
+
+    <!-- Panneau de gauche (Données) -->
+    <div id="leftPanel" class="panel hidden">
+        <h3>Filtres des Données</h3>
+        
+        <div class="form-group">
+            <label for="filter-commune">Afficher les communes par :</label>
+            <select id="filter-commune" class="form-control">
+                <option value="surface">Surface (5 classes)</option>
+                <option value="prefecture">Prefecture</option>
+                <option value="commune">Commune / Arrondissement</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="population-view">Symbologie de la Population :</label>
+            <select id="population-view" class="form-control">
+                <option value="2004">Population 2004 (5 classes)</option>
+                <option value="1994">Population 1994 (5 classes)</option>
+                <option value="compare">Comparaison 1994/2004</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="hotel-category-filter">Hôtels par catégorie :</label>
+            <select id="hotel-category-filter" class="form-control">
+                <option value="all">Toutes les catégories</option>
+                <option value="1*">1 étoile</option>
+                <option value="2*">2 étoiles</option>
+                <option value="3*">3 étoiles</option>
+                <option value="4*">4 étoiles</option>
+                <option value="5*">5 étoiles</option>
+            </select>
+        </div>
+        
+        <div class="form-group">
+            <label for="gs-type-filter">Grandes surfaces par type :</label>
+            <select id="gs-type-filter" class="form-control">
+                <option value="all">Tous les types</option>
+                <option value="Marjane">Marjane</option>
+                <option value="Acima">Acima</option>
+                <option value="LABEL VIE">LABEL VIE</option>
+                <option value="Grande Surface Spécialisée">Grande Surface Spécialisée</option>
+                <option value="Twin Center">Twin Center</option>
+            </select>
+        </div>
+        
+        <button id="toggleBasemap" class="btn btn-block">🗺 Changer le fond de carte</button>
+        <div id="basemap-gallery" class="hidden"></div>
+    </div>
+
+    <!-- Panneau de droite (Réclamations) -->
+    <div id="rightPanel" class="panel hidden">
+        <h3>Gestion des Réclamations</h3>
+        
+        <!-- Formulaire de réclamation -->
+        <div id="reclamationForm">
+            <div class="form-group">
+                <label for="reclamationObjet">Objet :</label>
+                <input type="text" id="reclamationObjet" class="form-control">
+            </div>
+            
+            <div class="form-group">
+                <label for="reclamationMessage">Message :</label>
+                <textarea id="reclamationMessage" class="form-control"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="reclamationEmail">Email :</label>
+                <input type="email" id="reclamationEmail" class="form-control">
+            </div>
+            
+            <button id="startReclamation" class="btn btn-block">📍 Placer sur la carte</button>
+            <button id="saveReclamation" class="btn btn-block" disabled>💾 Enregistrer</button>
+            <button id="viewReclamations" class="btn btn-block">📋 Voir toutes les réclamations</button>
+        </div>
+        
+        <!-- Liste des réclamations -->
+        <div id="reclamationList" class="hidden">
+            <h4>Liste des Réclamations</h4>
+            <div id="reclamationsContainer"></div>
+            <button id="closeReclamations" class="btn btn-block">✕ Fermer</button>
+        </div>
+    </div>
+
+    <script src="https://js.arcgis.com/4.26/"></script>
+    <script>
+        // Gestion de l'interface
+        document.getElementById('toggleLeftPanel').addEventListener('click', function() {
+            const panel = document.getElementById('leftPanel');
+            panel.classList.toggle('hidden');
+        });
+
+        document.getElementById('toggleReclamations').addEventListener('click', function() {
+            const panel = document.getElementById('rightPanel');
+            panel.classList.toggle('hidden');
+        });
+
+        // Le reste de votre code JavaScript existant peut rester inchangé
+        // (les fonctions de gestion de la carte et des réclamations)
+    </script>
     <script src="likn.js"></script>
 </body>
 </html>
