@@ -417,3 +417,125 @@ textarea.form-control {
     display: none;
     z-index: 100;
 }
+
+
+/* Style professionnel pour le panneau de filtres */
+#leftPanel {
+    position: absolute;
+    top: 70px;
+    left: 20px;
+    width: 280px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    z-index: 100;
+    border: 1px solid #e1e4e8;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#leftPanel h3 {
+    color: #2c3e50;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    font-weight: 600;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    color: #4a5568;
+    font-weight: 500;
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: #374151;
+    background-color: #f9fafb;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    background-color: #ffffff;
+}
+
+select.form-control {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+    padding-right: 30px;
+}
+
+#toggleBasemap {
+    width: 100%;
+    padding: 10px;
+    background-color: #3b82f6;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+#toggleBasemap:hover {
+    background-color: #2563eb;
+}
+
+#toggleBasemap:active {
+    background-color: #1d4ed8;
+}
+
+#basemap-gallery {
+    margin-top: 15px;
+    border: 1px solid #e1e4e8;
+    border-radius: 6px;
+    padding: 10px;
+    background: #f8fafc;
+}
+
+/* Animation pour l'ouverture/fermeture */
+.panel {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.panel.hidden {
+    transform: translateX(-20px);
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* Style pour les options des select */
+option {
+    padding: 8px;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    #leftPanel {
+        width: 240px;
+        left: 10px;
+        top: 60px;
+    }
+}
